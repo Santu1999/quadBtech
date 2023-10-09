@@ -1,0 +1,39 @@
+npx create-react-app job-portal
+src/
+|-- components/
+|   |-- Login.js
+|   |-- Signup.js
+|   |-- LandingPage.js
+|   |-- JobList.js
+|   |-- JobDetail.js
+|   |-- ApplicationForm.js
+|   |-- SuccessPage.js
+|
+|-- containers/
+|   |-- App.js
+|   |-- Router.js
+|
+|-- actions/
+|   |-- jobActions.js
+|   |-- userActions.js
+|
+|-- reducers/
+|   |-- jobReducer.js
+|   |-- userReducer.js
+|
+|-- pages/
+|   |-- LoginPage.js
+|   |-- SignupPage.js
+|   |-- LandingPage.js
+|   |-- JobListPage.js
+|   |-- JobDetailPage.js
+|   |-- ApplicationFormPage.js
+|   |-- SuccessPage.js
+|
+|-- App.css
+|-- index.js
+|-- store.js
+|-- index.css
+|-- ...
+
+npm install react-router-dom redux react-redux redux-thunk
