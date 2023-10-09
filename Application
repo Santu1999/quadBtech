@@ -1,0 +1,70 @@
+// components/ApplicationForm.jsx
+import React, { useState } from 'react';
+
+const ApplicationForm = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [coverLetter, setCoverLetter] = useState('');
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Handle form submission, e.g., send data to server
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input 
+        type="text"
+        value={name}
+        onChange={(e) => setName(e.target.value)}
+        placeholder="Name"
+        required
+      />
+      <input 
+        type="email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+        required
+      />
+      <textarea 
+        value={coverLetter}
+        onChange={(e) => setCoverLetter(e.target.value)}
+        placeholder="Cover Letter"
+        required
+      />
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default ApplicationForm;
+
+
+
+
+
+// pages/SuccessPage.jsx
+import React from 'react';
+
+const SuccessPage = ({ formData }) => {
+  return (
+    <div>
+      <h2>Application Submitted Successfully!</h2>
+      <h3>Preview:</h3>
+      <p>Name: {formData.name}</p>
+      <p>Email: {formData.email}</p>
+      <p>Cover Letter: {formData.coverLetter}</p>
+      {/* Optionally display uploaded files */}
+    </div>
+  );
+};
+
+export default SuccessPage;
+
+
+
+
+
+
+
