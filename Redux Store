@@ -1,0 +1,108 @@
+import { createStore, applyMiddleware, combineReducers } from 'redux';
+import thunk from 'redux-thunk';
+import jobReducer from './reducers/jobReducer';
+
+const rootReducer = combineReducers({
+  jobs: jobReducer,
+  // Add more reducers if needed
+});
+
+const store = createStore(rootReducer, applyMiddleware(thunk));
+
+export default store;
+
+
+const initialState = [];
+
+const jobReducer = (state = initialState, action) => {
+  switch (action.type) {
+    case 'FETCH_JOBS_SUCCESS':
+      return action.payload;
+    case 'FETCH_JOBS_ERROR':
+      return [];
+    default:
+      return state;
+  }
+};
+
+export default jobReducer;
+
+
+export const fetchJobs = (language) => {
+  return async (dispatch) => {
+    try {
+      const response = await fetch(`https://jobs.github.com/positions.json?description=${language}`);
+      const data = await response.json();
+      dispatch({ type: 'FETCH_JOBS_SUCCESS', payload: data });
+    } catch (error) {
+      dispatch({ type: 'FETCH_JOBS_ERROR', payload: error });
+    }
+  };
+};
+
+
+
+
+
+import React, { useState } from 'react';
+
+const ApplicationForm = () => {
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [coverLetter, setCoverLetter] = useState('');
+  const [formErrors, setFormErrors] = useState({});
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    // Basic form validation
+    const errors = {};
+    if (!name.trim()) errors.name = 'Name is required';
+    if (!email.trim()) errors.email = 'Email is required';
+    if (!coverLetter.trim()) errors.coverLetter = 'Cover letter is required';
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+    } else {
+      setFormErrors({});
+      // Handle form submission, e.g., send data to server
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <div>
+        <input 
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Name"
+          required
+        />
+        {formErrors.name && <span className="error">{formErrors.name}</span>}
+      </div>
+      <div>
+        <input 
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="Email"
+          required
+        />
+        {formErrors.email && <span className="error">{formErrors.email}</span>}
+      </div>
+      <div>
+        <textarea 
+          value={coverLetter}
+          onChange={(e) => setCoverLetter(e.target.value)}
+          placeholder="Cover Letter"
+          required
+        />
+        {formErrors.coverLetter && <span className="error">{formErrors.coverLetter}</span>}
+      </div>
+      <button type="submit">Submit</button>
+    </form>
+  );
+};
+
+export default ApplicationForm;
